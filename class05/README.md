@@ -38,6 +38,6 @@ A **Virtual Private Cloud (VPC)** is your isolated network in AWS. Think of it a
 - **Example:**
   - EC2 in private subnet needs to read from S3 bucket → use VPC Endpoint for S3 (no NAT Gateway needed)
 
-_Full details can be found at the course's github repository https://github.com/lvgalvao/data-engineering-roadmap/tree/main/Bootcamp%20-%20Cloud%20para%20dados/Aula_05_
+Full details can be found at the course's github repository https://github.com/lvgalvao/data-engineering-roadmap/tree/main/Bootcamp%20-%20Cloud%20para%20dados/Aula_05
 
 Great youtube video about VPCs and Subnets in AWS: https://www.youtube.com/live/HtHuPAz3B7I?si=51ZjlIPPjlz3mMwj
