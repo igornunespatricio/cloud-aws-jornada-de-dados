@@ -119,8 +119,8 @@ def consultar_cotacao_bitcoin():
 # Criar a tabela no banco de dados
 criar_tabela()
 
-# Agendar a função para rodar a cada 15 segundos
-schedule.every(15).seconds.do(consultar_cotacao_bitcoin)
+# Agendar a função para rodar a cada 5 segundos
+schedule.every(5).seconds.do(consultar_cotacao_bitcoin)
 
 # Loop principal para manter o agendamento ativo
 if __name__ == "__main__":
