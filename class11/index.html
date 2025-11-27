@@ -1,0 +1,87 @@
+import * as fs from 'node:fs';
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client();
+const html = fs.readFileSync('index.html', { encoding: 'utf8' });
+
+export const handler = async (event) => {
+    console.log('Method:', event.requestContext.http.method);
+    console.log('Path:', event.requestContext.http.path);
+    
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
+    
+    // Handle preflight OPTIONS request
+    if (event.requestContext.http.method === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers: headers,
+            body: ''
+        };
+    }
+    
+    // Handle POST request (save to S3)
+    if (event.requestContext.http.method === 'POST') {
+        try {
+            const body = JSON.parse(event.body);
+            const userText = body.text;
+            
+            if (!userText) {
+                return {
+                    statusCode: 400,
+                    headers: headers,
+                    body: JSON.stringify({ error: 'Text is required' })
+                };
+            }
+            
+            // Create file name with timestamp
+            const fileName = `user-text-${Date.now()}.txt`;
+            
+            // Save to S3
+            await s3Client.send(new PutObjectCommand({
+                Bucket: 'bucket-to-test-123254',
+                Key: fileName,
+                Body: userText,
+                ContentType: 'text/plain'
+            }));
+            
+            return {
+                statusCode: 200,
+                headers: headers,
+                body: JSON.stringify({ 
+                    message: 'Text saved to S3 successfully!',
+                    fileName: fileName
+                })
+            };
+            
+        } catch (error) {
+            console.error('Error:', error);
+            return {
+                statusCode: 500,
+                headers: headers,
+                body: JSON.stringify({ error: error.message })
+            };
+        }
+    }
+    
+    // Handle GET request (serve HTML)
+    if (event.requestContext.http.method === 'GET') {
+        return {
+            statusCode: 200,
+            headers: {
+                'Content-Type': 'text/html',
+            },
+            body: html,
+        };
+    }
+    
+    // Method not allowed
+    return {
+        statusCode: 405,
+        headers: headers,
+        body: JSON.stringify({ error: 'Method Not Allowed' })
+    };
+};
