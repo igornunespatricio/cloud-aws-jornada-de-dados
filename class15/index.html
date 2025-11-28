@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Valor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        input { padding: 10px; width: 200px; margin-right: 10px; }
+        button { padding: 10px 20px; }
+        #message { margin-top: 20px; color: green; }
+        #error { margin-top: 20px; color: red; }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Valor no DynamoDB</h1>
+    <input type="text" id="value" placeholder="Digite um valor">
+    <button onclick="addValue()">Adicionar</button>
+
+    <div id="message"></div>
+    <div id="error"></div>
+
+    <script>
+        // Cole aqui a URL completa da sua rota do API Gateway
+        const API_URL = "https://u55t1udu2a.execute-api.us-east-1.amazonaws.com/prod/add-value";
+
+        async function addValue() {
+            const value = document.getElementById("value").value;
+            document.getElementById("message").textContent = "";
+            document.getElementById("error").textContent = "";
+
+            if (!value) {
+                document.getElementById("error").textContent = "Digite algum valor!";
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ value })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById("message").textContent = data.message;
+                    document.getElementById("value").value = "";
+                } else {
+                    document.getElementById("error").textContent = data.message || "Erro desconhecido";
+                }
+            } catch (err) {
+                document.getElementById("error").textContent = "Erro ao conectar com a API: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
