@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar Valor</title>
+    <title>Add Value</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 50px; }
         input { padding: 10px; width: 200px; margin-right: 10px; }
@@ -12,15 +12,15 @@
     </style>
 </head>
 <body>
-    <h1>Adicionar Valor no DynamoDB</h1>
-    <input type="text" id="value" placeholder="Digite um valor">
-    <button onclick="addValue()">Adicionar</button>
+    <h1>Add Value to DynamoDB</h1>
+    <input type="text" id="value" placeholder="Enter a value">
+    <button onclick="addValue()">Add</button>
 
     <div id="message"></div>
     <div id="error"></div>
 
     <script>
-        // Cole aqui a URL completa da sua rota do API Gateway
+        // Paste here the full URL of your API Gateway route
         const API_URL = "https://u55t1udu2a.execute-api.us-east-1.amazonaws.com/prod/add-value";
 
         async function addValue() {
@@ -29,7 +29,7 @@
             document.getElementById("error").textContent = "";
 
             if (!value) {
-                document.getElementById("error").textContent = "Digite algum valor!";
+                document.getElementById("error").textContent = "Please enter a value!";
                 return;
             }
 
@@ -48,10 +48,10 @@
                     document.getElementById("message").textContent = data.message;
                     document.getElementById("value").value = "";
                 } else {
-                    document.getElementById("error").textContent = data.message || "Erro desconhecido";
+                    document.getElementById("error").textContent = data.message || "Unknown error";
                 }
             } catch (err) {
-                document.getElementById("error").textContent = "Erro ao conectar com a API: " + err.message;
+                document.getElementById("error").textContent = "Error connecting to the API: " + err.message;
             }
         }
     </script>
