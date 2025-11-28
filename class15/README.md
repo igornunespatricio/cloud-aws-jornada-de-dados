@@ -1,8 +1,4 @@
-Perfeito! Vamos criar uma **versão completa do README em inglês**, mantendo o passo a passo que fizemos na AWS UI e o diagrama **Mermaid** já corrigido e detalhado.
-
----
-
-# **AWS Web App Project - README**
+# **AWS Web App Project**
 
 ## **Architecture**
 
@@ -182,9 +178,3 @@ graph LR
 
 - Test via browser, curl, or API Gateway
 - Fully working via AWS UI
-
----
-
-Se você quiser, posso criar também uma **versão final do README pronta para Terraform ou CDK**, mantendo o mesmo estilo e diagrama em Mermaid, mas com instruções de **IaC deployment**.
-
-Quer que eu faça isso?
