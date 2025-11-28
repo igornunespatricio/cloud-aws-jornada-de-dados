@@ -108,6 +108,13 @@ This use case implements a serverless data processing pipeline where an SNS topi
 
 ```mermaid
 graph TB
+    classDef blackBold fill:#e1f5fe,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+    classDef blackBold2 fill:#f3e5f5,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+    classDef blackBold3 fill:#e8f5e8,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+    classDef blackBold4 fill:#fff3e0,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+    classDef blackBold5 fill:#fce4ec,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+    classDef blackBold6 fill:#f1f8e9,color:#000000,stroke:#000000,stroke-width:2px,font-weight:bold
+
     subgraph Data Generation
         A[Python Script<br/>Message Generator] -->|Publishes random user data| B[SNS Topic<br/>user-data-topic]
     end
@@ -117,23 +124,17 @@ graph TB
         C -->|Stores processed data| D[(S3 Bucket<br/>user-data-bucket)]
     end
 
-    subgraph Data Flow
-        A -->|JSON Message<br/>first_name, last_name, email, cellphone| B
-        B -->|SNS Event<br/>with message metadata| C
-        C -->|Enriched JSON<br/>+ timestamps + message_id| D
-    end
-
     subgraph Supporting Services
         E[IAM Role<br/>LambdaExecutionRole] -->|Provides permissions| C
         F[CloudWatch Logs] -->|Stores logs| C
     end
 
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-    style E fill:#fce4ec
-    style F fill:#f1f8e9
+    class A blackBold
+    class B blackBold2
+    class C blackBold3
+    class D blackBold4
+    class E blackBold5
+    class F blackBold6
 ```
 
 Create sns topic
