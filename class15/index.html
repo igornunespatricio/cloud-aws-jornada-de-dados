@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Value</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        input { padding: 10px; width: 200px; margin-right: 10px; }
+        button { padding: 10px 20px; }
+        #message { margin-top: 20px; color: green; }
+        #error { margin-top: 20px; color: red; }
+    </style>
+</head>
+<body>
+    <h1>Add Value to DynamoDB</h1>
+    <input type="text" id="value" placeholder="Enter a value">
+    <button onclick="addValue()">Add</button>
+
+    <div id="message"></div>
+    <div id="error"></div>
+
+    <script>
+        // Paste here the full URL of your API Gateway route
+        const API_URL = "https://u55t1udu2a.execute-api.us-east-1.amazonaws.com/prod/add-value";
+
+        async function addValue() {
+            const value = document.getElementById("value").value;
+            document.getElementById("message").textContent = "";
+            document.getElementById("error").textContent = "";
+
+            if (!value) {
+                document.getElementById("error").textContent = "Please enter a value!";
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ value })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById("message").textContent = data.message;
+                    document.getElementById("value").value = "";
+                } else {
+                    document.getElementById("error").textContent = data.message || "Unknown error";
+                }
+            } catch (err) {
+                document.getElementById("error").textContent = "Error connecting to the API: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
